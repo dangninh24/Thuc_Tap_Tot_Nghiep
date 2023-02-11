@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_home_admin"
+    app:startDestination="@id/menu">
+
+    <fragment
+        android:id="@+id/menu"
+        android:name="com.example.quanlyquantrasua.fragment.MenuFragment"
+        android:label="fragment_menu"
+        tools:layout="@layout/fragment_menu" >
+        <action
+            android:id="@+id/action_menuFragment_to_tableFragment"
+            app:destination="@id/table" />
+        <action
+            android:id="@+id/action_menuFragment_to_historyFragment"
+            app:destination="@id/history" />
+        <action
+            android:id="@+id/action_menuFragment_to_statisticalFragment"
+            app:destination="@id/statistical" />
+    </fragment>
+    <fragment
+        android:id="@+id/table"
+        android:name="com.example.quanlyquantrasua.fragment.TableFragment"
+        android:label="fragment_table"
+        tools:layout="@layout/fragment_table" >
+        <action
+            android:id="@+id/action_tableFragment_to_statisticalFragment"
+            app:destination="@id/statistical" />
+        <action
+            android:id="@+id/action_tableFragment_to_menuFragment"
+            app:destination="@id/menu" />
+        <action
+            android:id="@+id/action_tableFragment_to_historyFragment"
+            app:destination="@id/history" />
+    </fragment>
+    <fragment
+        android:id="@+id/statistical"
+        android:name="com.example.quanlyquantrasua.fragment.StatisticalFragment"
+        android:label="fragment_statistical"
+        tools:layout="@layout/fragment_statistical" >
+        <action
+            android:id="@+id/action_statisticalFragment_to_historyFragment"
+            app:destination="@id/history" />
+        <action
+            android:id="@+id/action_statisticalFragment_to_tableFragment"
+            app:destination="@id/table" />
+        <action
+            android:id="@+id/action_statisticalFragment_to_historyFragment2"
+            app:destination="@id/history" />
+        <action
+            android:id="@+id/action_statisticalFragment_to_menuFragment"
+            app:destination="@id/menu" />
+    </fragment>
+    <fragment
+        android:id="@+id/history"
+        android:name="com.example.quanlyquantrasua.fragment.HistoryFragment"
+        android:label="fragment_history"
+        tools:layout="@layout/fragment_history" >
+        <action
+            android:id="@+id/action_historyFragment_to_menuFragment"
+            app:destination="@id/menu" />
+        <action
+            android:id="@+id/action_historyFragment_to_statisticalFragment"
+            app:destination="@id/statistical" />
+        <action
+            android:id="@+id/action_historyFragment_to_tableFragment"
+            app:destination="@id/table" />
+    </fragment>
+</navigation>

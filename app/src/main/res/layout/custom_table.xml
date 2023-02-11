@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="table"
+            type="com.example.quanlyquantrasua.model.Table" />
+    </data>
+
+    <RelativeLayout
+        android:layout_margin="6dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_table"
+            android:layout_margin="6dp"
+            app:cardCornerRadius="40dp"
+            app:cardElevation="8dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:contentDescription="Bàn ăn"
+                    android:layout_above="@id/txt_table"
+                    android:id="@+id/img_table"
+                    android:scaleType="centerInside"
+                    android:background="@{table.empty == true ? @color/color_table : @color/white}"
+                    android:src="@drawable/table_icon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+                <TextView
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_above="@id/txt_table"
+                    android:text="@{table.empty == true ? @string/description_table_full : @string/description_table_empty}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:background="@{table.empty == true ? @color/color_table : @color/white}"
+                    android:textColor="@color/black"
+                    android:paddingBottom="20dp"
+                    android:layout_alignParentBottom="true"
+                    android:id="@+id/txt_table"
+                    android:textStyle="bold"
+                    android:text="@{table.name}"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+</layout>
