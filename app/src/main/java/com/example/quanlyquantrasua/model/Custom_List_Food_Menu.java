@@ -1,9 +1,11 @@
 package com.example.quanlyquantrasua.model;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,14 +18,12 @@ import java.util.List;
 public class Custom_List_Food_Menu extends RecyclerView.Adapter<Custom_List_Food_Menu.Myholder> {
     List<Food> list_food;
 
+    setOnItemClickListener itemClickListener;
     public void setItemClickListener(setOnItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
     }
-
-    setOnItemClickListener itemClickListener;
-
     public interface setOnItemClickListener {
-        void dosomething(boolean check, int position, Food food);
+        public void dosomething(boolean check, int position);
     }
 
 
@@ -39,22 +39,24 @@ public class Custom_List_Food_Menu extends RecyclerView.Adapter<Custom_List_Food
     }
 
     @Override
-    public int getItemCount() {
-        return list_food.size();
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull Myholder holder, int position) {
+    public void onBindViewHolder(@NonNull Myholder holder, @SuppressLint("RecyclerView") int position) {
         Food food = list_food.get(position);
         holder.binding.setFood(food);
         holder.binding.switchFood.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                itemClickListener.dosomething(b, position, food);
+                itemClickListener.dosomething(b, position);
+                Toast.makeText(holder.itemView.getContext(), "Test 1" , Toast.LENGTH_SHORT).show();
             }
         });
-
     }
+
+    @Override
+    public int getItemCount() {
+        return list_food.size();
+    }
+
+
 
     public class Myholder extends RecyclerView.ViewHolder {
         CustomFoodMenuBinding binding;

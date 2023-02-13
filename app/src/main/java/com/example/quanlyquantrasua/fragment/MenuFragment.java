@@ -84,7 +84,7 @@ public class MenuFragment extends Fragment {
         binding.listFoodMenu.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         custom_list_food_menu.setItemClickListener(new Custom_List_Food_Menu.setOnItemClickListener() {
             @Override
-            public void dosomething(boolean check, int position, Food food) {
+            public void dosomething(boolean check, int position) {
                 list_food.get(position).setCheck(check);
                 custom_list_food_menu.notifyDataSetChanged();
             }
