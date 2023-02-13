@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="food"
+            type="com.example.quanlyquantrasua.model.Food" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        app:cardBackgroundColor="@{food.check == true ? @color/white : @color/color_uncheck_food}"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="8dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp">
+
+            <ImageView
+                android:id="@+id/img_food"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:src="@drawable/menu_icon" />
+
+            <LinearLayout
+                android:id="@+id/lnl_information_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="2dp"
+                android:layout_toRightOf="@id/img_food"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:text="Tên: " />
+
+                    <TextView
+                        android:id="@+id/txt_food_name"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{food.name}" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:text="Giá tiền: " />
+
+                    <TextView
+                        android:id="@+id/txt_food_price"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{String.valueOf(food.price)}" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:text="Hàng hoá: " />
+
+                    <TextView
+                        android:id="@+id/txt_food_status"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{food.status == true ? @string/status_in_stock: @string/status_out_stock}" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <Switch
+                android:id="@+id/switch_food"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:checked="@{food.check}"
+                android:minWidth="48dp"
+                android:minHeight="48dp" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

@@ -4,4 +4,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="description_table_empty">Trống</string>
     <string name="description_table_full">Đã đặt</string>
+    <string name="status_in_stock">Còn</string>
+    <string name="status_out_stock">hết hàng</string>
 </resources>

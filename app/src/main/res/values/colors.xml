@@ -10,4 +10,5 @@
     <color name="red">#FF0000</color>
     <color name="icon_menu">#88553D</color>
     <color name="color_table">#B86842</color>
+    <color name="color_uncheck_food">@android:color/darker_gray</color>
 </resources>

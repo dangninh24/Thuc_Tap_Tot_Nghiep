@@ -3,14 +3,21 @@ package com.example.quanlyquantrasua.fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.Toast;
 
 import com.example.quanlyquantrasua.R;
 import com.example.quanlyquantrasua.databinding.FragmentMenuBinding;
+import com.example.quanlyquantrasua.model.Custom_List_Food_Menu;
+import com.example.quanlyquantrasua.model.Food;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -67,16 +74,19 @@ public class MenuFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_menu, container, false);
         binding = FragmentMenuBinding.bind(view);
-        //binding = FragmentMenuBinding.inflate(getLayoutInflater());
-        binding.switchFood.setChecked(true);
-        binding.switchFood.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        List<Food> list_food = new ArrayList<>();
+        list_food.add(new Food(R.drawable.menu_icon, "Cà Phê Loại 1", 100000, true, true));
+        list_food.add(new Food(R.drawable.menu_icon, "Cà Phê Loại 2", 110000, true, false));
+
+        Custom_List_Food_Menu custom_list_food_menu = new Custom_List_Food_Menu(list_food);
+
+        binding.listFoodMenu.setAdapter(custom_list_food_menu);
+        binding.listFoodMenu.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        custom_list_food_menu.setItemClickListener(new Custom_List_Food_Menu.setOnItemClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(!b) {
-                    binding.rltFood.setBackgroundResource(androidx.cardview.R.color.cardview_dark_background);
-                } else {
-                    binding.rltFood.setVisibility(View.VISIBLE);
-                }
+            public void dosomething(boolean check, int position, Food food) {
+                list_food.get(position).setCheck(check);
+                custom_list_food_menu.notifyDataSetChanged();
             }
         });
         return binding.getRoot();

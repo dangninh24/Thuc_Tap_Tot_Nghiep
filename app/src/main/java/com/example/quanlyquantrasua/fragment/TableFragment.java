@@ -89,8 +89,8 @@ public class TableFragment extends Fragment {
         custom_list_table.setItemClickListener(new Custom_List_table.setOnItemClickListener() {
             @Override
             public void dosomething(int position) {
-                Toast.makeText(getContext(), position + 1 + "", Toast.LENGTH_SHORT).show();
-                list.get(position).empty = true;
+                boolean check = list.get(position).empty == true ? false : true;
+                list.get(position).empty = check;
                 custom_list_table.notifyDataSetChanged();
             }
         });
