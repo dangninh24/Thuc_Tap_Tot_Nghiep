@@ -6,6 +6,8 @@ import androidx.room.Relation;
 import com.example.quanlyquantrasua.model.Bill;
 import com.example.quanlyquantrasua.model.Table;
 
+import java.util.List;
+
 public class TableAndBill {
     @Embedded
     public Table table;
@@ -13,5 +15,5 @@ public class TableAndBill {
             parentColumn = "tableID",
             entityColumn = "tableID"
     )
-    public Bill bill;
+    public List<Bill> bill;
 }

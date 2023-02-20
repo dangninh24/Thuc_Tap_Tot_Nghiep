@@ -6,6 +6,8 @@ import androidx.room.Relation;
 import com.example.quanlyquantrasua.model.Category;
 import com.example.quanlyquantrasua.model.Food;
 
+import java.util.List;
+
 public class CategoryAndFood {
     @Embedded
     public Category category;
@@ -13,5 +15,5 @@ public class CategoryAndFood {
             parentColumn = "categoryID",
             entityColumn = "categoryID"
     )
-    public Food food;
+    public List<Food> food;
 }
