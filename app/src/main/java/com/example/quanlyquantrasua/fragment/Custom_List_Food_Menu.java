@@ -1,17 +1,17 @@
-package com.example.quanlyquantrasua.model;
+package com.example.quanlyquantrasua.fragment;
 
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.quanlyquantrasua.R;
 import com.example.quanlyquantrasua.databinding.CustomFoodMenuBinding;
+import com.example.quanlyquantrasua.model.Food;
 
 import java.util.List;
 
@@ -46,7 +46,6 @@ public class Custom_List_Food_Menu extends RecyclerView.Adapter<Custom_List_Food
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 itemClickListener.dosomething(b, position);
-                Toast.makeText(holder.itemView.getContext(), "Test 1" , Toast.LENGTH_SHORT).show();
             }
         });
     }

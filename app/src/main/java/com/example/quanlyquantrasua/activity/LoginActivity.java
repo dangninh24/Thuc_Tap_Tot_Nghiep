@@ -2,12 +2,9 @@ package com.example.quanlyquantrasua.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import com.example.quanlyquantrasua.R;
 import com.example.quanlyquantrasua.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
@@ -24,7 +21,5 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(this, HomeActivity.class);
             startActivity(intent);
         });
-
-
     }
 }

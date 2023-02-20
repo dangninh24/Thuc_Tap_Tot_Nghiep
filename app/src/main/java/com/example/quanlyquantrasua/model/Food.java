@@ -1,8 +1,19 @@
 package com.example.quanlyquantrasua.model;
 
 public class Food {
+    private int foodID;
     private int image;
+    private String name;
+    private int price;
+    private boolean status;
 
+    public Food(int foodID, int image, String name, int price, boolean status) {
+        this.foodID = foodID;
+        this.image = image;
+        this.name = name;
+        this.price = price;
+        this.status = status;
+    }
     public int getImage() {
         return image;
     }
@@ -11,26 +22,6 @@ public class Food {
         this.image = image;
     }
 
-    private String name;
-    private int price;
-    private boolean status;
-    private boolean check;
-
-    public Food(int image, String name, int price, boolean status, boolean check) {
-        this.check = check;
-        this.image = image;
-        this.name = name;
-        this.price = price;
-        this.status = status;
-    }
-
-    public boolean isCheck() {
-        return check;
-    }
-
-    public void setCheck(boolean check) {
-        this.check = check;
-    }
 
     public String getName() {
         return name;

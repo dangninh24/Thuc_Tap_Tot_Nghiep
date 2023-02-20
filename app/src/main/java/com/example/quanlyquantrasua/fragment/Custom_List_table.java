@@ -1,23 +1,22 @@
-package com.example.quanlyquantrasua.model;
+package com.example.quanlyquantrasua.fragment;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.quanlyquantrasua.R;
 import com.example.quanlyquantrasua.databinding.CustomTableBinding;
+import com.example.quanlyquantrasua.model.Table;
 
 import java.util.List;
 
 public class Custom_List_table extends RecyclerView.Adapter<Custom_List_table.MyViewHolder> {
 
     List<Table> list;
+
     public interface setOnItemClickListener{
         void dosomething(int position);
     }

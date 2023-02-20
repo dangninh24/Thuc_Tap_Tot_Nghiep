@@ -3,18 +3,19 @@ package com.example.quanlyquantrasua.fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
-import android.widget.Toast;
 
 import com.example.quanlyquantrasua.R;
 import com.example.quanlyquantrasua.databinding.FragmentMenuBinding;
-import com.example.quanlyquantrasua.model.Custom_List_Food_Menu;
 import com.example.quanlyquantrasua.model.Food;
+import com.example.quanlyquantrasua.viewmodel.FoodViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,7 @@ import java.util.List;
 public class MenuFragment extends Fragment {
     FragmentMenuBinding binding;
     View view;
+    FoodViewModel foodViewModel;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -66,6 +68,7 @@ public class MenuFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        foodViewModel = new ViewModelProvider(this).get(FoodViewModel.class);
     }
 
     @Override
@@ -75,18 +78,23 @@ public class MenuFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_menu, container, false);
         binding = FragmentMenuBinding.bind(view);
         List<Food> list_food = new ArrayList<>();
-        list_food.add(new Food(R.drawable.menu_icon, "Cà Phê Loại 1", 100000, true, true));
-        list_food.add(new Food(R.drawable.menu_icon, "Cà Phê Loại 2", 110000, true, false));
+        list_food.add(new Food(1, R.drawable.menu_icon, "Cà Phê Loại 1", 100000, true));
+        list_food.add(new Food(2, R.drawable.menu_icon, "Cà Phê Loại 2", 110000, false));
 
         Custom_List_Food_Menu custom_list_food_menu = new Custom_List_Food_Menu(list_food);
-
+        foodViewModel.getFood().observe((LifecycleOwner) getContext(), new Observer<List<Food>>() {
+            @Override
+            public void onChanged(List<Food> foods) {
+                custom_list_food_menu.notifyDataSetChanged();
+            }
+        });
         binding.listFoodMenu.setAdapter(custom_list_food_menu);
         binding.listFoodMenu.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         custom_list_food_menu.setItemClickListener(new Custom_List_Food_Menu.setOnItemClickListener() {
             @Override
             public void dosomething(boolean check, int position) {
-                list_food.get(position).setCheck(check);
-                custom_list_food_menu.notifyDataSetChanged();
+                list_food.get(position).setStatus(check);
+                foodViewModel.LoadData(list_food);
             }
         });
         return binding.getRoot();

@@ -30,7 +30,7 @@
                     android:layout_above="@id/txt_table"
                     android:id="@+id/img_table"
                     android:scaleType="centerInside"
-                    android:background="@{table.empty == true ? @color/color_table : @color/white}"
+                    android:background="@{table.status == true ? @color/color_table : @color/white}"
                     android:src="@drawable/table_icon"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
@@ -39,11 +39,11 @@
                     android:textStyle="bold"
                     android:textColor="@color/black"
                     android:layout_above="@id/txt_table"
-                    android:text="@{table.empty == true ? @string/description_table_full : @string/description_table_empty}"
+                    android:text="@{table.status == true ? @string/description_table_full : @string/description_table_empty}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
                 <TextView
-                    android:background="@{table.empty == true ? @color/color_table : @color/white}"
+                    android:background="@{table.status == true ? @color/color_table : @color/white}"
                     android:textColor="@color/black"
                     android:paddingBottom="20dp"
                     android:layout_alignParentBottom="true"
