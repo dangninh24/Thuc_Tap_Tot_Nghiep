@@ -1,6 +1,13 @@
 package com.example.quanlyquantrasua.model;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "Table")
 public class Table {
+    @PrimaryKey(autoGenerate = false)
+    @NonNull
     public int tableID;
     public String name;
     public boolean status;

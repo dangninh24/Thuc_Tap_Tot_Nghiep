@@ -4,10 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-//@Entity(tableName = "Account")
+@Entity(tableName = "Account")
 public class Account {
-//    @PrimaryKey(autoGenerate = false)
-//    @NonNull
+    @PrimaryKey(autoGenerate = false)
+    @NonNull
     private String usedName;
     private String password;
     private boolean permission;

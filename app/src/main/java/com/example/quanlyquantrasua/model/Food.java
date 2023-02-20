@@ -1,7 +1,16 @@
 package com.example.quanlyquantrasua.model;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "Food")
 public class Food {
+
+    @PrimaryKey(autoGenerate = false)
+    @NonNull
     private int foodID;
+    private int categoryID;
     private int image;
     private String name;
     private int price;
