@@ -5,7 +5,7 @@
     <data>
         <variable
             name="table"
-            type="com.example.quanlyquantrasua.model.Table" />
+            type="com.example.quanlyquantrasua.model.TableFood" />
     </data>
 
     <RelativeLayout

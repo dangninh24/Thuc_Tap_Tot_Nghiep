@@ -4,13 +4,13 @@ import androidx.room.Embedded;
 import androidx.room.Relation;
 
 import com.example.quanlyquantrasua.model.Bill;
-import com.example.quanlyquantrasua.model.Table;
+import com.example.quanlyquantrasua.model.TableFood;
 
 import java.util.List;
 
 public class TableAndBill {
     @Embedded
-    public Table table;
+    public TableFood table;
     @Relation(
             parentColumn = "tableID",
             entityColumn = "tableID"

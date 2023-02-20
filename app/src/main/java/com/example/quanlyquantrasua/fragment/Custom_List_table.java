@@ -9,13 +9,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.quanlyquantrasua.R;
 import com.example.quanlyquantrasua.databinding.CustomTableBinding;
-import com.example.quanlyquantrasua.model.Table;
+import com.example.quanlyquantrasua.model.TableFood;
 
 import java.util.List;
 
 public class Custom_List_table extends RecyclerView.Adapter<Custom_List_table.MyViewHolder> {
 
-    List<Table> list;
+    List<TableFood> list;
 
     public interface setOnItemClickListener{
         void dosomething(int position);
@@ -27,7 +27,7 @@ public class Custom_List_table extends RecyclerView.Adapter<Custom_List_table.My
         this.itemClickListener = itemClickListener;
     }
 
-    public Custom_List_table(List<Table> list) {
+    public Custom_List_table(List<TableFood> list) {
         this.list = list;
     }
 
@@ -40,7 +40,7 @@ public class Custom_List_table extends RecyclerView.Adapter<Custom_List_table.My
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Table table = list.get(position);
+        TableFood table = list.get(position);
         holder.binding.setTable(table);
         holder.binding.cardTable.setOnClickListener(view -> {
             itemClickListener.dosomething(position);

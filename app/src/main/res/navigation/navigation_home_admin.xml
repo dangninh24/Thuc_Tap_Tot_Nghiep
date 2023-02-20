@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_home_admin"
-    app:startDestination="@id/menu">
+    app:startDestination="@id/table">
 
     <fragment
         android:id="@+id/menu"
@@ -46,9 +46,6 @@
         <action
             android:id="@+id/action_statisticalFragment_to_tableFragment"
             app:destination="@id/table" />
-        <action
-            android:id="@+id/action_statisticalFragment_to_historyFragment2"
-            app:destination="@id/history" />
         <action
             android:id="@+id/action_statisticalFragment_to_menuFragment"
             app:destination="@id/menu" />

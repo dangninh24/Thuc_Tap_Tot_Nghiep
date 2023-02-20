@@ -14,7 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.quanlyquantrasua.R;
-import com.example.quanlyquantrasua.model.Table;
+import com.example.quanlyquantrasua.activity.HomeActivity;
+import com.example.quanlyquantrasua.activity.LoginActivity;
+import com.example.quanlyquantrasua.data.dbconnect.DBConnect;
+import com.example.quanlyquantrasua.model.TableFood;
 import com.example.quanlyquantrasua.viewmodel.TableViewModel;
 
 import java.util.ArrayList;
@@ -29,6 +32,8 @@ public class TableFragment extends Fragment {
     View view;
     RecyclerView recyclerView;
     TableViewModel tableViewModel;
+    HomeActivity homeActivity;
+    DBConnect dbConnect;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -68,6 +73,7 @@ public class TableFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
         tableViewModel = new ViewModelProvider(this).get(TableViewModel.class);
 
     }
@@ -78,29 +84,23 @@ public class TableFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_table, container, false);
         recyclerView = view.findViewById(R.id.rcv_list_table);
-        List<Table> list = new ArrayList<>();
-        list.add(new Table(1 ,"Bàn số 1", true));
-        list.add(new Table(2,"Bàn số 2", false));
-        list.add(new Table(3,"Bàn số 3", true));
-        list.add(new Table(4,"Bàn số 4", false));
-        list.add(new Table(5,"Bàn số 5", true));
-        list.add(new Table(6,"Bàn số 6", false));
-        list.add(new Table(7,"Bàn số 7", false));
+        homeActivity = (HomeActivity) getActivity();
+        List<TableFood> listTable = homeActivity.getListTable();
 
-        Custom_List_table custom_list_table = new Custom_List_table(list);
+        Custom_List_table custom_list_table = new Custom_List_table(listTable);
         recyclerView.setAdapter(custom_list_table);
-        tableViewModel.getTable().observe((LifecycleOwner) getContext(), new Observer<List<Table>>() {
+        tableViewModel.getTable().observe((LifecycleOwner) getContext(), new Observer<List<TableFood>>() {
             @Override
-            public void onChanged(List<Table> tables) {
+            public void onChanged(List<TableFood> tables) {
                 custom_list_table.notifyDataSetChanged();
             }
         });
         custom_list_table.setItemClickListener(new Custom_List_table.setOnItemClickListener() {
             @Override
             public void dosomething(int position) {
-                boolean check = list.get(position).status == true ? false : true;
-                list.get(position).status = check;
-                tableViewModel.loadTable(list);
+                boolean check = listTable.get(position).status == true ? false : true;
+                listTable.get(position).status = check;
+                tableViewModel.loadTable(listTable);
             }
         });
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));

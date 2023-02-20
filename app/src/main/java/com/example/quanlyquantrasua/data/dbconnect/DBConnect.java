@@ -12,10 +12,17 @@ import com.example.quanlyquantrasua.data.dao.CategoryDAO;
 import com.example.quanlyquantrasua.data.dao.FoodDAO;
 import com.example.quanlyquantrasua.data.dao.TableDAO;
 import com.example.quanlyquantrasua.model.Account;
+import com.example.quanlyquantrasua.model.Bill;
+import com.example.quanlyquantrasua.model.BillInfo;
+import com.example.quanlyquantrasua.model.Category;
+import com.example.quanlyquantrasua.model.Food;
+import com.example.quanlyquantrasua.model.TableFood;
+
+import java.io.Serializable;
 
 @TypeConverters({TypeConvert.class})
-@Database(entities = {Account.class}, version = 1)
-public abstract class DBConnect extends RoomDatabase {
+@Database(entities = {Account.class, TableFood.class, Food.class, Category.class, Bill.class, BillInfo.class}, version = 1)
+public abstract class DBConnect extends RoomDatabase implements Serializable {
     public abstract AccountDAO getAccountDAO();
     public abstract BillDAO getBillDAO();
     public abstract BillInfoDAO getBillInfoDAO();

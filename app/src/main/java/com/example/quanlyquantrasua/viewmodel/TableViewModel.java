@@ -4,21 +4,21 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.quanlyquantrasua.model.Table;
+import com.example.quanlyquantrasua.model.TableFood;
 
 import java.util.List;
 
 public class TableViewModel extends ViewModel {
-    private MutableLiveData<List<Table>> listTable;
+    private MutableLiveData<List<TableFood>> listTable;
 
-    public LiveData<List<Table>> getTable() {
+    public LiveData<List<TableFood>> getTable() {
         if(listTable == null) {
             listTable = new MutableLiveData<>();
         }
         return listTable;
     }
 
-    public void loadTable(List<Table> list){
+    public void loadTable(List<TableFood> list){
         listTable.setValue(list);
     }
 

@@ -4,15 +4,19 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "Table")
-public class Table {
+@Entity(tableName = "TableFood")
+public class TableFood {
     @PrimaryKey(autoGenerate = false)
     @NonNull
     public int tableID;
     public String name;
     public boolean status;
 
-    public Table(int id, String name, boolean status) {
+    public TableFood(){
+
+    }
+
+    public TableFood(int id, String name, boolean status) {
         this.tableID = id;
         this.name = name;
         this.status = status;

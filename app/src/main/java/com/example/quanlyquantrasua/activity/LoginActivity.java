@@ -14,6 +14,9 @@ import android.widget.Toast;
 import com.example.quanlyquantrasua.data.dbconnect.DBConnect;
 import com.example.quanlyquantrasua.databinding.ActivityLoginBinding;
 import com.example.quanlyquantrasua.model.Account;
+import com.example.quanlyquantrasua.model.TableFood;
+
+import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding binding;
@@ -27,11 +30,22 @@ public class LoginActivity extends AppCompatActivity {
         dbConnect = Room.databaseBuilder(this, DBConnect.class, "Database")
                 .allowMainThreadQueries()
                 .build();
+
+//        dbConnect.getTableDAO().AddTable(new TableFood(1,"Bàn số 1", false));
+//        dbConnect.getTableDAO().AddTable(new TableFood(2,"Bàn số 2", false));
+//        dbConnect.getTableDAO().AddTable(new TableFood(3,"Bàn số 3", false));
+//        dbConnect.getTableDAO().AddTable(new TableFood(4,"Bàn số 4", false));
+//        dbConnect.getTableDAO().AddTable(new TableFood(5,"Bàn số 5", false));
+//        dbConnect.getTableDAO().AddTable(new TableFood(6,"Bàn số 6", false));
+//        dbConnect.getTableDAO().AddTable(new TableFood(7,"Bàn số 7", false));
+//        dbConnect.getTableDAO().AddTable(new TableFood(8,"Bàn số 8", false));
+//        dbConnect.getTableDAO().AddTable(new TableFood(9,"Bàn số 9", false));
+//        dbConnect.getTableDAO().AddTable(new TableFood(10,"Bàn số 10", false));
+
+//        dbConnect.getAccountDAO().AddAccount(new Account("Admin", "1"));
 //        SharedPreferences sharedPreferences = this.getSharedPreferences("Login", Context.MODE_PRIVATE);
 //        SharedPreferences.Editor editor = sharedPreferences.edit();
-
         ClickEvenListener();
-
     }
 
     private void ClickEvenListener() {
@@ -71,4 +85,5 @@ public class LoginActivity extends AppCompatActivity {
         }
 
     }
+
 }
