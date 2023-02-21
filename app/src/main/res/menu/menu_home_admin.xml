@@ -5,7 +5,7 @@
         android:icon="@drawable/table_icon"
         android:id="@+id/table"
         app:showAsAction="ifRoom"
-        android:title="Table"/>
+        android:title="Bàn ăn"/>
     <item
         android:icon="@drawable/menu_icon"
         android:id="@+id/menu"
@@ -16,10 +16,10 @@
         android:icon="@drawable/statistical_icon"
         android:id="@+id/statistical"
         app:showAsAction="ifRoom"
-        android:title="Statistical"/>
+        android:title="Thống kê"/>
     <item
         android:icon="@drawable/history_icon"
         android:id="@+id/history"
         app:showAsAction="ifRoom"
-        android:title="History"/>
+        android:title="Lịch sử"/>
 </menu>

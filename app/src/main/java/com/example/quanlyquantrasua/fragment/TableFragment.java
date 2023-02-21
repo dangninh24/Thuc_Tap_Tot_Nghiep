@@ -1,5 +1,8 @@
 package com.example.quanlyquantrasua.fragment;
 
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,16 +10,24 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 
 import com.example.quanlyquantrasua.R;
 import com.example.quanlyquantrasua.activity.HomeActivity;
-import com.example.quanlyquantrasua.activity.LoginActivity;
+import com.example.quanlyquantrasua.custom.Custom_List_Food_Pay;
+import com.example.quanlyquantrasua.custom.Custom_List_table;
 import com.example.quanlyquantrasua.data.dbconnect.DBConnect;
+import com.example.quanlyquantrasua.data.relationship.FoodAndBillInfo;
+import com.example.quanlyquantrasua.model.BillInfo;
+import com.example.quanlyquantrasua.model.Food;
 import com.example.quanlyquantrasua.model.TableFood;
 import com.example.quanlyquantrasua.viewmodel.TableViewModel;
 
@@ -83,11 +94,18 @@ public class TableFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_table, container, false);
+        CustomAdapter(container);
+        return view;
+    }
+
+    private void CustomAdapter(ViewGroup container) {
         recyclerView = view.findViewById(R.id.rcv_list_table);
         homeActivity = (HomeActivity) getActivity();
+
         List<TableFood> listTable = homeActivity.getListTable();
 
         Custom_List_table custom_list_table = new Custom_List_table(listTable);
+
         recyclerView.setAdapter(custom_list_table);
         tableViewModel.getTable().observe((LifecycleOwner) getContext(), new Observer<List<TableFood>>() {
             @Override
@@ -95,17 +113,59 @@ public class TableFragment extends Fragment {
                 custom_list_table.notifyDataSetChanged();
             }
         });
+
         custom_list_table.setItemClickListener(new Custom_List_table.setOnItemClickListener() {
             @Override
             public void dosomething(int position) {
                 boolean check = listTable.get(position).status == true ? false : true;
+                ShowPayment(check, position);
                 listTable.get(position).status = check;
                 tableViewModel.loadTable(listTable);
+
             }
         });
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+    }
 
+    private void ShowPayment(boolean check, int position) {
+        if(check) {
+            return;
+        }
 
-        return view;
+        List<FoodAndBillInfo> foodAndBillInfoList = new ArrayList<>();
+        Food food = new Food(1, R.drawable.menu_icon, "Cà phê", 100000, true);
+        BillInfo billInfo = new BillInfo(1, 1, 10);
+
+        FoodAndBillInfo foodAndBillInfo = new FoodAndBillInfo();
+        foodAndBillInfo.billInfo = billInfo;
+        foodAndBillInfo.food = food;
+        foodAndBillInfoList.add(foodAndBillInfo);
+
+        Dialog dialog = new Dialog(getContext());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.custom_payment);
+        dialog.setCancelable(true);
+
+        Window window = dialog.getWindow();
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        Button btnPay = dialog.findViewById(R.id.btn_pay);
+
+        RecyclerView recyclerView = dialog.findViewById(R.id.food_list_payment);
+        Custom_List_Food_Pay customListFoodPay = new Custom_List_Food_Pay(foodAndBillInfoList);
+
+        recyclerView.setAdapter(customListFoodPay);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        btnPay.setOnClickListener(view ->{
+            PayTheBill(dialog);
+        });
+
+        dialog.show();
+    }
+
+    private void PayTheBill(Dialog dialog) {
+        dialog.cancel();
     }
 }

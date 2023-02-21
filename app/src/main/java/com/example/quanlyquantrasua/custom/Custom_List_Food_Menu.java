@@ -1,4 +1,4 @@
-package com.example.quanlyquantrasua.fragment;
+package com.example.quanlyquantrasua.custom;
 
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
