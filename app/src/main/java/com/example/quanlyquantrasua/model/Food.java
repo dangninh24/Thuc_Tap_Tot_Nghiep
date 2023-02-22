@@ -14,7 +14,7 @@ public class Food {
     private int image;
     private String name;
     private int price;
-    private boolean status;
+    private boolean status; // Thuộc tính status để xác định xem món có được mở để order hay không ?
 
     public Food(int foodID, int image, String name, int price, boolean status) {
         this.foodID = foodID;

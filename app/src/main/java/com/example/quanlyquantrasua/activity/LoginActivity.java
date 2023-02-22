@@ -14,8 +14,11 @@ import android.widget.Toast;
 import com.example.quanlyquantrasua.data.dbconnect.DBConnect;
 import com.example.quanlyquantrasua.databinding.ActivityLoginBinding;
 import com.example.quanlyquantrasua.model.Account;
+import com.example.quanlyquantrasua.model.Bill;
 import com.example.quanlyquantrasua.model.TableFood;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
@@ -30,7 +33,12 @@ public class LoginActivity extends AppCompatActivity {
         dbConnect = Room.databaseBuilder(this, DBConnect.class, "Database")
                 .allowMainThreadQueries()
                 .build();
-
+//        dbConnect.getBillDAO().AddBill(new Bill(1, 1, new Date(2022, 2, 22, 10, 20), new Date(2022, 2, 22, 11, 24), 1000000, true));
+//        dbConnect.getBillDAO().AddBill(new Bill(2, 1, new Date(2022, 2, 22, 8, 23), new Date(2022, 2, 22, 13, 32), 2000000, true));
+//        dbConnect.getBillDAO().AddBill(new Bill(3, 1, new Date(2022, 2, 22, 9, 52), new Date(2022, 2, 22, 12, 52), 5000000, true));
+//        dbConnect.getBillDAO().AddBill(new Bill(4, 1, new Date(2022, 2, 22, 13, 15), new Date(2022, 2, 22, 12, 33), 2000000, true));
+//        dbConnect.getBillDAO().AddBill(new Bill(5, 1, new Date(2022, 2, 22, 16, 23), new Date(2022, 2, 22, 12, 14), 5000000, true));
+//        dbConnect.getBillDAO().AddBill(new Bill(6, 1, new Date(2022, 2, 22, 16, 15), new Date(2022, 2, 22, 12, 23), 900000, true));
 //        dbConnect.getTableDAO().AddTable(new TableFood(1,"Bàn số 1", false));
 //        dbConnect.getTableDAO().AddTable(new TableFood(2,"Bàn số 2", false));
 //        dbConnect.getTableDAO().AddTable(new TableFood(3,"Bàn số 3", false));
@@ -41,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
 //        dbConnect.getTableDAO().AddTable(new TableFood(8,"Bàn số 8", false));
 //        dbConnect.getTableDAO().AddTable(new TableFood(9,"Bàn số 9", false));
 //        dbConnect.getTableDAO().AddTable(new TableFood(10,"Bàn số 10", false));
-
+//
 //        dbConnect.getAccountDAO().AddAccount(new Account("Admin", "1"));
 //        SharedPreferences sharedPreferences = this.getSharedPreferences("Login", Context.MODE_PRIVATE);
 //        SharedPreferences.Editor editor = sharedPreferences.edit();

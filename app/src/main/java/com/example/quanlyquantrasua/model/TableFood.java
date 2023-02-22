@@ -10,7 +10,7 @@ public class TableFood {
     @NonNull
     public int tableID;
     public String name;
-    public boolean status;
+    public boolean status; // Thuộc tính status kiểm tra bàn có trống hay không ?
 
     public TableFood(){
 

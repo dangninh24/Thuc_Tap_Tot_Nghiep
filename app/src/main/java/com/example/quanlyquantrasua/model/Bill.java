@@ -14,14 +14,24 @@ public class Bill {
     private int tableID;
     private Date dateCheckIn;
     private Date dateCheckOut;
-    private boolean status;
+    private int totalPrice;
+    private boolean status; // Thuộc tính status kiểm tra xem bill đã được thanh toán hay chưa ?
 
-    public Bill(int billID, int tableID, Date dateCheckIn, Date dateCheckOut, boolean status) {
+    public Bill(int billID, int tableID, Date dateCheckIn, Date dateCheckOut, int totalPrice, boolean status) {
         this.billID = billID;
         this.tableID = tableID;
         this.dateCheckIn = dateCheckIn;
         this.dateCheckOut = dateCheckOut;
         this.status = status;
+        this.totalPrice = totalPrice;
+    }
+
+    public int getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(int totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     public int getBillID() {

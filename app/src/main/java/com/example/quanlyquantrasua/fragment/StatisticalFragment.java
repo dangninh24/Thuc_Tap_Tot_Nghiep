@@ -1,5 +1,6 @@
 package com.example.quanlyquantrasua.fragment;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,8 +8,12 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 
 import com.example.quanlyquantrasua.R;
+import com.example.quanlyquantrasua.databinding.FragmentStatisticalBinding;
+
+import java.util.Calendar;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,6 +21,8 @@ import com.example.quanlyquantrasua.R;
  * create an instance of this fragment.
  */
 public class StatisticalFragment extends Fragment {
+    View view;
+    FragmentStatisticalBinding binding;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -58,9 +65,40 @@ public class StatisticalFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_statistical, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_statistical, container, false);
+        binding = FragmentStatisticalBinding.bind(view);
+
+        Even();
+
+        return view;
+    }
+
+    private void Even() {
+        binding.btnDateStart.setOnClickListener(views -> {
+            Calendar calendar = Calendar.getInstance();
+
+            DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                    binding.btnDateStart.setText("" + year + "/" + month + "/" + dayOfMonth);
+                }
+            }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+
+            datePickerDialog.show();
+        });
+
+        binding.btnDateEnd.setOnClickListener(views -> {
+            Calendar calendar = Calendar.getInstance();
+
+            DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                    binding.btnDateStart.setText("" + year + "/" + month + "/" + dayOfMonth);
+                }
+            }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+
+            datePickerDialog.show();
+        });
     }
 }
