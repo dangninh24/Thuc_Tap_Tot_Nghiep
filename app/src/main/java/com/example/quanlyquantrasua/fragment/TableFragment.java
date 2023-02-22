@@ -19,6 +19,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.quanlyquantrasua.R;
 import com.example.quanlyquantrasua.activity.HomeActivity;
@@ -132,19 +134,12 @@ public class TableFragment extends Fragment {
             return;
         }
 
-        List<FoodAndBillInfo> foodAndBillInfoList = new ArrayList<>();
-        Food food = new Food(1, R.drawable.menu_icon, "Cà phê", 100000, true);
-        BillInfo billInfo = new BillInfo(1, 1, 10);
-
-        FoodAndBillInfo foodAndBillInfo = new FoodAndBillInfo();
-        foodAndBillInfo.billInfo = billInfo;
-        foodAndBillInfo.food = food;
-        foodAndBillInfoList.add(foodAndBillInfo);
-
         Dialog dialog = new Dialog(getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.custom_payment);
         dialog.setCancelable(true);
+
+        ShowFoodPay(dialog);
 
         Window window = dialog.getWindow();
         window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
@@ -152,17 +147,45 @@ public class TableFragment extends Fragment {
 
         Button btnPay = dialog.findViewById(R.id.btn_pay);
 
+        btnPay.setOnClickListener(view ->{
+            PayTheBill(dialog);
+        });
+
+        dialog.show();
+    }
+
+    private void ShowFoodPay(Dialog dialog) {
+        List<FoodAndBillInfo> foodAndBillInfoList = new ArrayList<>();
+        Food food = new Food(1, R.drawable.menu_icon, "Cà phê", 60000, true);
+        BillInfo billInfo = new BillInfo(1, 1, 3);
+
+        Food food2 = new Food(2, R.drawable.menu_icon, "Hướng dương", 10000, true);
+        BillInfo billInfo2 = new BillInfo(1, 2, 3);
+
+        FoodAndBillInfo foodAndBillInfo = new FoodAndBillInfo();
+        foodAndBillInfo.billInfo = billInfo;
+        foodAndBillInfo.food = food;
+
+        FoodAndBillInfo foodAndBillInfo2 = new FoodAndBillInfo();
+        foodAndBillInfo2.billInfo = billInfo2;
+        foodAndBillInfo2.food = food2;
+
+
+        foodAndBillInfoList.add(foodAndBillInfo);
+        foodAndBillInfoList.add(foodAndBillInfo2);
+
         RecyclerView recyclerView = dialog.findViewById(R.id.food_list_payment);
         Custom_List_Food_Pay customListFoodPay = new Custom_List_Food_Pay(foodAndBillInfoList);
 
         recyclerView.setAdapter(customListFoodPay);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        btnPay.setOnClickListener(view ->{
-            PayTheBill(dialog);
-        });
-
-        dialog.show();
+        TextView txtTotalPrice = dialog.findViewById(R.id.txt_totalPrice_pay);
+        int sum = 0;
+        for(FoodAndBillInfo item : foodAndBillInfoList) {
+            sum += item.food.getPrice() * item.billInfo.getCount();
+        }
+        txtTotalPrice.setText(String.valueOf(sum) + " NVD");
     }
 
     private void PayTheBill(Dialog dialog) {

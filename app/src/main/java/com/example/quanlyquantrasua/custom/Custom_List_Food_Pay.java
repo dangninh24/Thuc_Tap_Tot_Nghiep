@@ -33,6 +33,7 @@ public class Custom_List_Food_Pay extends RecyclerView.Adapter<Custom_List_Food_
         FoodAndBillInfo foodAndBillInfo = list.get(position);
         holder.binding.txtFoodCount.setText(String.valueOf(foodAndBillInfo.billInfo.getCount()));
         holder.binding.txtFoodName.setText(foodAndBillInfo.food.getName());
+        holder.binding.txtFoodPrice.setText(String.valueOf(foodAndBillInfo.food.getPrice()));
 
     }
 
