@@ -6,6 +6,7 @@ import androidx.room.Query;
 
 import com.example.quanlyquantrasua.model.Bill;
 
+import java.util.Date;
 import java.util.List;
 
 @Dao
@@ -15,4 +16,7 @@ public interface BillDAO {
 
     @Query("SELECT * FROM BILL WHERE status = :status")
     public List<Bill> getListBill(boolean status);
+
+    @Query("SELECT * FROM BILL WHERE dateCheckIn >= :dateStart AND dateCheckOut <= :dateEnd AND status = :status")
+    public List<Bill> getListBillByDate(Date dateStart, Date dateEnd, boolean status);
 }

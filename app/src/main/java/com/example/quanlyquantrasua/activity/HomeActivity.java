@@ -52,10 +52,8 @@ public class HomeActivity extends AppCompatActivity {
     public List<Bill> getListBill(){
         return dbConnect.getBillDAO().getListBill(true);
     }
-
-    public void AddBill(){
-        //new Bill(1, 1, new Date(2022, 2, 22, 10, 20), new Date(2022, 2, 22, 11, 24), 1000000, true)
-        Bill bill = new Bill(10, 1, new Date(2022, 2, 22, 10, 20), new Date(2022, 2, 22, 11, 24), 1000000, true);
-        dbConnect.getBillDAO().AddBill(bill);
+    public List<Bill> getListBillDate(Date dateStart, Date dateEnd) {
+        return dbConnect.getBillDAO().getListBillByDate(dateStart, dateEnd, true);
     }
+
 }
