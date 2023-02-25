@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,14 +25,18 @@ import android.widget.Toast;
 
 import com.example.quanlyquantrasua.R;
 import com.example.quanlyquantrasua.activity.HomeActivity;
+import com.example.quanlyquantrasua.custom.Custom_List_Food_Order;
 import com.example.quanlyquantrasua.custom.Custom_List_Food_Pay;
 import com.example.quanlyquantrasua.custom.Custom_List_table;
 import com.example.quanlyquantrasua.data.dbconnect.DBConnect;
 import com.example.quanlyquantrasua.data.relationship.FoodAndBillInfo;
+import com.example.quanlyquantrasua.databinding.CustomFoodOrderBinding;
+import com.example.quanlyquantrasua.databinding.FragmentTableBinding;
 import com.example.quanlyquantrasua.model.BillInfo;
 import com.example.quanlyquantrasua.model.Food;
 import com.example.quanlyquantrasua.model.TableFood;
 import com.example.quanlyquantrasua.viewmodel.TableViewModel;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +51,7 @@ public class TableFragment extends Fragment {
     RecyclerView recyclerView;
     TableViewModel tableViewModel;
     HomeActivity homeActivity;
-    DBConnect dbConnect;
+    RecyclerView rcv;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -100,6 +105,8 @@ public class TableFragment extends Fragment {
         return view;
     }
 
+
+
     private void CustomAdapter(ViewGroup container) {
         recyclerView = view.findViewById(R.id.rcv_list_table);
         homeActivity = (HomeActivity) getActivity();
@@ -123,10 +130,57 @@ public class TableFragment extends Fragment {
                 ShowPayment(check, position);
                 listTable.get(position).status = check;
                 tableViewModel.loadTable(listTable);
+            }
 
+            @Override
+            public void order(int position) {
+                showOrder();
+                
             }
         });
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+    }
+
+    private void showOrder() {
+        View viewBottomSheet = getLayoutInflater().inflate(R.layout.custom_order_bottomsheet, null);
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
+        bottomSheetDialog.setContentView(viewBottomSheet);
+        rcv = bottomSheetDialog.findViewById(R.id.rcv_list_food_order);
+
+        List<Food> list_food = new ArrayList<>();
+
+        Custom_List_Food_Order custom_list_food_order = new Custom_List_Food_Order(list_food);
+        rcv.setAdapter(custom_list_food_order);
+        rcv.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        custom_list_food_order.setOnItemClickListener(new Custom_List_Food_Order.ItemClickListener() {
+            @Override
+            public void DoSomething(int position) {
+
+            }
+
+            @Override
+            public void PlusCount(CustomFoodOrderBinding binding, int position) {
+                String numberString = binding.etxtFoodCount.getText().toString();
+                int number = Integer.valueOf(numberString) + 1;
+                binding.etxtFoodCount.setText(String.valueOf(number));
+            }
+
+            @Override
+            public void MinusCount(CustomFoodOrderBinding binding, int position) {
+                String numberString = binding.etxtFoodCount.getText().toString();
+                int number = Integer.valueOf(numberString) - 1;
+                binding.etxtFoodCount.setText(String.valueOf(number));
+            }
+
+            @Override
+            public void SelectCount(CustomFoodOrderBinding binding, int position) {
+                Toast.makeText(homeActivity, "Món " + list_food.get(position).getName() + "    order " + binding.etxtFoodCount.getText().toString(), Toast.LENGTH_SHORT).show();
+            }
+
+        });
+
+        bottomSheetDialog.show();
     }
 
     private void ShowPayment(boolean check, int position) {
@@ -148,7 +202,7 @@ public class TableFragment extends Fragment {
         Button btnPay = dialog.findViewById(R.id.btn_pay);
 
         btnPay.setOnClickListener(view ->{
-            PayTheBill(dialog);
+            CancelPayTheBill(dialog);
         });
 
         dialog.show();
@@ -156,10 +210,10 @@ public class TableFragment extends Fragment {
 
     private void ShowFoodPay(Dialog dialog) {
         List<FoodAndBillInfo> foodAndBillInfoList = new ArrayList<>();
-        Food food = new Food(1, R.drawable.menu_icon, "Cà phê", 60000, true);
+        Food food = new Food(1, 0, R.drawable.menu_icon, "Cà phê", 60000, true);
         BillInfo billInfo = new BillInfo(1, 1, 3);
 
-        Food food2 = new Food(2, R.drawable.menu_icon, "Hướng dương", 10000, true);
+        Food food2 = new Food(2, 0, R.drawable.menu_icon, "Hướng dương", 10000, true);
         BillInfo billInfo2 = new BillInfo(1, 2, 3);
 
         FoodAndBillInfo foodAndBillInfo = new FoodAndBillInfo();
@@ -188,7 +242,7 @@ public class TableFragment extends Fragment {
         txtTotalPrice.setText(String.valueOf(sum) + " NVD");
     }
 
-    private void PayTheBill(Dialog dialog) {
+    private void CancelPayTheBill(Dialog dialog) {
         dialog.cancel();
     }
 }

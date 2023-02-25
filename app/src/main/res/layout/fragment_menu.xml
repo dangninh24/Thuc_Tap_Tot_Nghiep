@@ -6,14 +6,14 @@
     tools:context=".fragment.MenuFragment">
 
     <TextView
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:id="@+id/txt_title_tables"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
         android:fontFamily="casual"
         android:gravity="center"
         android:text="Danh sách đồ uống"
@@ -22,8 +22,34 @@
         android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_below="@id/txt_title_tables"
         android:id="@+id/list_food_menu"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"
+        android:layout_above="@id/lnl_add_foods"
+        android:layout_below="@id/txt_title_tables" />
+
+    <LinearLayout
+        android:id="@+id/lnl_add_foods"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="8dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_add_foods"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thêm"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/btn_delete_foods"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:text="Xoá"
+            android:textColor="@color/black" />
+    </LinearLayout>
 </RelativeLayout>

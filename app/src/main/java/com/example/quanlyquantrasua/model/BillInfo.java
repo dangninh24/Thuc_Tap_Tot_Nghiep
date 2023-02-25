@@ -6,8 +6,7 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "BillInfo")
 public class BillInfo {
-    @PrimaryKey(autoGenerate = false)
-    @NonNull
+    @PrimaryKey(autoGenerate = true)
     private int billInfoID;
     private int foodID;
     private int count;

@@ -7,8 +7,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "Food")
 public class Food {
 
-    @PrimaryKey(autoGenerate = false)
-    @NonNull
+    @PrimaryKey(autoGenerate = true)
     private int foodID;
     private int categoryID;
     private int image;
@@ -16,12 +15,13 @@ public class Food {
     private int price;
     private boolean status; // Thuộc tính status để xác định xem món có được mở để order hay không ?
 
-    public Food(int foodID, int image, String name, int price, boolean status) {
+    public Food(int foodID, int categoryID, int image, String name, int price, boolean status) {
         this.foodID = foodID;
         this.image = image;
         this.name = name;
         this.price = price;
         this.status = status;
+        this.categoryID = categoryID;
     }
     public int getImage() {
         return image;

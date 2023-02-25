@@ -8,8 +8,7 @@ import java.util.Date;
 
 @Entity(tableName = "Bill")
 public class Bill {
-    @PrimaryKey(autoGenerate = false)
-    @NonNull
+    @PrimaryKey(autoGenerate = true)
     private int billID;
     private int tableID;
     private Date dateCheckIn;

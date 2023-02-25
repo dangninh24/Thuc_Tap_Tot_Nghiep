@@ -19,6 +19,7 @@ public class Custom_List_table extends RecyclerView.Adapter<Custom_List_table.My
 
     public interface setOnItemClickListener{
         void dosomething(int position);
+        void order(int position);
     }
 
     private setOnItemClickListener itemClickListener;
@@ -44,6 +45,9 @@ public class Custom_List_table extends RecyclerView.Adapter<Custom_List_table.My
         holder.binding.setTable(table);
         holder.binding.cardTable.setOnClickListener(view -> {
             itemClickListener.dosomething(position);
+        });
+        holder.binding.btnOrder.setOnClickListener(view -> {
+            itemClickListener.order(position);
         });
 
     }

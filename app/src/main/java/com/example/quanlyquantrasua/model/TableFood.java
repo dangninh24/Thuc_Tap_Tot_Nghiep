@@ -6,8 +6,7 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "TableFood")
 public class TableFood {
-    @PrimaryKey(autoGenerate = false)
-    @NonNull
+    @PrimaryKey(autoGenerate = true)
     public int tableID;
     public String name;
     public boolean status; // Thuộc tính status kiểm tra bàn có trống hay không ?

@@ -15,4 +15,7 @@ public interface TableDAO {
 
     @Query("SELECT * FROM TableFood")
     public List<TableFood> getListTable();
+
+    @Query("DELETE FROM tablefood WHERE tableID = :id")
+    public void deleteTableByID(int id);
 }

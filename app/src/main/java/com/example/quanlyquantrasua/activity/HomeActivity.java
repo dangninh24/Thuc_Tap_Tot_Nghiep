@@ -14,6 +14,8 @@ import com.example.quanlyquantrasua.databinding.ActivityHomeBinding;
 import com.example.quanlyquantrasua.fragment.HistoryFragment;
 import com.example.quanlyquantrasua.model.Account;
 import com.example.quanlyquantrasua.model.Bill;
+import com.example.quanlyquantrasua.model.Category;
+import com.example.quanlyquantrasua.model.Food;
 import com.example.quanlyquantrasua.model.TableFood;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -56,4 +58,37 @@ public class HomeActivity extends AppCompatActivity {
         return dbConnect.getBillDAO().getListBillByDate(dateStart, dateEnd, true);
     }
 
+    public void AddTable(TableFood table){
+        dbConnect.getTableDAO().AddTable(table);
+    }
+    public List<Food> getListFood(){
+        return dbConnect.getFoodDAO().getListFood();
+    }
+    public void AddCategory(Category category){
+        dbConnect.getCategoryDAO().AddCategory(category);
+    }
+    public List<Category> getListCategory(){
+        return dbConnect.getCategoryDAO().getListCategory();
+    }
+    public void AddFood(Food food) {
+        dbConnect.getFoodDAO().AddFood(food);
+    }
+    public void DeleteCategoryByID(int id){
+        dbConnect.getCategoryDAO().deleteCategoryByID(id);
+    }
+
+    public void DeleteTableByID(int id){
+        dbConnect.getTableDAO().deleteTableByID(id);
+    }
+
+    public void DeleteFoodByID(int id){
+        dbConnect.getFoodDAO().deleteFoodByID(id);
+    }
+    public void DeleteAllFoodByCategoryID(int id) {
+        dbConnect.getFoodDAO().deleteFoodByCategoryID(id);
+    }
+
+    public void UpdateFood(Food food) {
+        dbConnect.getFoodDAO().UpdateFood(food);
+    }
 }
