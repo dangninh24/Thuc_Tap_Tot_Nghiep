@@ -8,13 +8,23 @@ import androidx.room.PrimaryKey;
 public class BillInfo {
     @PrimaryKey(autoGenerate = true)
     private int billInfoID;
+    private int billID;
     private int foodID;
     private int count;
 
-    public BillInfo(int billInfoID, int foodID, int count) {
+    public BillInfo(int billInfoID, int billID, int foodID, int count) {
         this.billInfoID = billInfoID;
         this.foodID = foodID;
         this.count = count;
+        this.billID = billID;
+    }
+
+    public int getBillID() {
+        return billID;
+    }
+
+    public void setBillID(int billID) {
+        this.billID = billID;
     }
 
     public int getBillInfoID() {

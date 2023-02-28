@@ -32,6 +32,7 @@ import com.example.quanlyquantrasua.data.dbconnect.DBConnect;
 import com.example.quanlyquantrasua.data.relationship.FoodAndBillInfo;
 import com.example.quanlyquantrasua.databinding.CustomFoodOrderBinding;
 import com.example.quanlyquantrasua.databinding.FragmentTableBinding;
+import com.example.quanlyquantrasua.model.Bill;
 import com.example.quanlyquantrasua.model.BillInfo;
 import com.example.quanlyquantrasua.model.Food;
 import com.example.quanlyquantrasua.model.TableFood;
@@ -39,6 +40,8 @@ import com.example.quanlyquantrasua.viewmodel.TableViewModel;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -52,6 +55,8 @@ public class TableFragment extends Fragment {
     TableViewModel tableViewModel;
     HomeActivity homeActivity;
     RecyclerView rcv;
+    Custom_List_table custom_list_table;
+    Custom_List_Food_Order custom_list_food_order;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -101,19 +106,17 @@ public class TableFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_table, container, false);
-        CustomAdapter(container);
+        ShowTable();
         return view;
     }
 
-
-
-    private void CustomAdapter(ViewGroup container) {
+    private void ShowTable() {
         recyclerView = view.findViewById(R.id.rcv_list_table);
         homeActivity = (HomeActivity) getActivity();
 
         List<TableFood> listTable = homeActivity.getListTable();
 
-        Custom_List_table custom_list_table = new Custom_List_table(listTable);
+        custom_list_table = new Custom_List_table(listTable);
 
         recyclerView.setAdapter(custom_list_table);
         tableViewModel.getTable().observe((LifecycleOwner) getContext(), new Observer<List<TableFood>>() {
@@ -127,60 +130,118 @@ public class TableFragment extends Fragment {
             @Override
             public void dosomething(int position) {
                 boolean check = listTable.get(position).status == true ? false : true;
-                ShowPayment(check, position);
-                listTable.get(position).status = check;
-                tableViewModel.loadTable(listTable);
+                ShowPayment(check, listTable.get(position).getTableID());
             }
 
             @Override
             public void order(int position) {
-                showOrder();
-                
+                TableFood table = listTable.get(position);
+                showOrder(table);
             }
         });
+
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
     }
 
-    private void showOrder() {
+    private void showOrder(TableFood table) {
         View viewBottomSheet = getLayoutInflater().inflate(R.layout.custom_order_bottomsheet, null);
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
         bottomSheetDialog.setContentView(viewBottomSheet);
         rcv = bottomSheetDialog.findViewById(R.id.rcv_list_food_order);
+        Button btn_exit = bottomSheetDialog.findViewById(R.id.btn_exit_order);
+        TextView txtTableName = bottomSheetDialog.findViewById(R.id.txt_table_name_bottomsheet);
+        txtTableName.setText(table.getName());
 
-        List<Food> list_food = new ArrayList<>();
 
-        Custom_List_Food_Order custom_list_food_order = new Custom_List_Food_Order(list_food);
+        List<Food> list_food = homeActivity.getListFoodByStatus(true);
+
+        custom_list_food_order = new Custom_List_Food_Order(list_food);
         rcv.setAdapter(custom_list_food_order);
         rcv.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        btn_exit.setOnClickListener( views -> {
+            bottomSheetDialog.cancel();
+        });
 
         custom_list_food_order.setOnItemClickListener(new Custom_List_Food_Order.ItemClickListener() {
             @Override
             public void DoSomething(int position) {
-
             }
 
             @Override
             public void PlusCount(CustomFoodOrderBinding binding, int position) {
-                String numberString = binding.etxtFoodCount.getText().toString();
-                int number = Integer.valueOf(numberString) + 1;
-                binding.etxtFoodCount.setText(String.valueOf(number));
+                PlusFoodCount(binding, position);
             }
 
             @Override
             public void MinusCount(CustomFoodOrderBinding binding, int position) {
-                String numberString = binding.etxtFoodCount.getText().toString();
-                int number = Integer.valueOf(numberString) - 1;
-                binding.etxtFoodCount.setText(String.valueOf(number));
+                MinusFoodCount(binding, position);
             }
 
             @Override
             public void SelectCount(CustomFoodOrderBinding binding, int position) {
-                Toast.makeText(homeActivity, "Món " + list_food.get(position).getName() + "    order " + binding.etxtFoodCount.getText().toString(), Toast.LENGTH_SHORT).show();
+                OrderFood(table, binding, position);
             }
-
         });
 
         bottomSheetDialog.show();
+    }
+
+    private void OrderFood(TableFood table, CustomFoodOrderBinding binding, int position) {
+        Bill bill = homeActivity.getBillByTableStatus(false, table.getTableID());
+        List<Food> list_food = homeActivity.getListFoodByStatus(true);
+
+        if(bill == null) {
+            Calendar calendar = Calendar.getInstance();
+            Date dateStart = new Date(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
+            Date dateEnd = null;
+            try {
+                Bill newBill = new Bill(0, table.getTableID(), dateStart, dateEnd, 0, false);
+                homeActivity.AddBill(newBill);
+            } catch (Exception err) {
+                Toast.makeText(homeActivity, "Lỗi đặt món ăn", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        try {
+            Bill bill1 = homeActivity.getBillByTableStatus(false, table.getTableID());
+            int count = Integer.valueOf(binding.etxtFoodCount.getText().toString());
+            if(count == 0) {
+                Toast.makeText(homeActivity, "Bạn phải chọn số lượng khi order.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            Food food = list_food.get(position);
+
+            BillInfo infoList = homeActivity.getListBillInfoByFoodID(bill1.getBillID(), food.getFoodID());
+
+            if(infoList != null) {
+                infoList.setCount(infoList.getCount() + count);
+                homeActivity.UpdateBillInfo(infoList);
+            } else {
+                BillInfo billInfo = new BillInfo(0, bill1.getBillID(), food.getFoodID(), count);
+                homeActivity.AddBillInfo(billInfo);
+            }
+
+            TableFood tableFood = homeActivity.getTableFoodById(table.getTableID());
+            tableFood.setStatus(true);
+            homeActivity.UpdateTableFood(tableFood);
+            ShowTable();
+            Toast.makeText(homeActivity, "Đặt đồ thành công.", Toast.LENGTH_SHORT).show();
+        } catch (Exception err) {
+            Toast.makeText(homeActivity, "Lỗi đặt món ăn.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void MinusFoodCount(CustomFoodOrderBinding binding, int position) {
+        String numberString = binding.etxtFoodCount.getText().toString();
+        int number = Integer.valueOf(numberString) - 1;
+        binding.etxtFoodCount.setText(String.valueOf(number));
+    }
+
+    private void PlusFoodCount(CustomFoodOrderBinding binding, int position) {
+        String numberString = binding.etxtFoodCount.getText().toString();
+        int number = Integer.valueOf(numberString) + 1;
+        binding.etxtFoodCount.setText(String.valueOf(number));
     }
 
     private void ShowPayment(boolean check, int position) {
@@ -193,7 +254,7 @@ public class TableFragment extends Fragment {
         dialog.setContentView(R.layout.custom_payment);
         dialog.setCancelable(true);
 
-        ShowFoodPay(dialog);
+        ShowFoodPay(dialog, position);
 
         Window window = dialog.getWindow();
         window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
@@ -202,44 +263,56 @@ public class TableFragment extends Fragment {
         Button btnPay = dialog.findViewById(R.id.btn_pay);
 
         btnPay.setOnClickListener(view ->{
-            CancelPayTheBill(dialog);
+            Payment(dialog, position);
         });
 
         dialog.show();
     }
 
-    private void ShowFoodPay(Dialog dialog) {
-        List<FoodAndBillInfo> foodAndBillInfoList = new ArrayList<>();
-        Food food = new Food(1, 0, R.drawable.menu_icon, "Cà phê", 60000, true);
-        BillInfo billInfo = new BillInfo(1, 1, 3);
-
-        Food food2 = new Food(2, 0, R.drawable.menu_icon, "Hướng dương", 10000, true);
-        BillInfo billInfo2 = new BillInfo(1, 2, 3);
-
-        FoodAndBillInfo foodAndBillInfo = new FoodAndBillInfo();
-        foodAndBillInfo.billInfo = billInfo;
-        foodAndBillInfo.food = food;
-
-        FoodAndBillInfo foodAndBillInfo2 = new FoodAndBillInfo();
-        foodAndBillInfo2.billInfo = billInfo2;
-        foodAndBillInfo2.food = food2;
-
-
-        foodAndBillInfoList.add(foodAndBillInfo);
-        foodAndBillInfoList.add(foodAndBillInfo2);
-
+    private void ShowFoodPay(Dialog dialog, int position) {
+        List<FoodAndBillInfo> foodAndBillInfoList = homeActivity.getListFoodAndBillInfoByBillID(position);
         RecyclerView recyclerView = dialog.findViewById(R.id.food_list_payment);
+        TextView txtTotalPrice = dialog.findViewById(R.id.txt_totalPrice_pay);
+
         Custom_List_Food_Pay customListFoodPay = new Custom_List_Food_Pay(foodAndBillInfoList);
 
         recyclerView.setAdapter(customListFoodPay);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        TextView txtTotalPrice = dialog.findViewById(R.id.txt_totalPrice_pay);
+
         int sum = 0;
         for(FoodAndBillInfo item : foodAndBillInfoList) {
             sum += item.food.getPrice() * item.billInfo.getCount();
         }
         txtTotalPrice.setText(String.valueOf(sum) + " NVD");
+    }
+
+    private void Payment(Dialog dialog, int position) {
+        // Tính tổng tiền.
+        List<FoodAndBillInfo> foodAndBillInfoList = homeActivity.getListFoodAndBillInfoByBillID(position);
+        int sum = 0;
+        for(FoodAndBillInfo item : foodAndBillInfoList) {
+            sum += item.food.getPrice() * item.billInfo.getCount();
+        }
+
+        // Lấy bill theo TableID và status = false;
+        Bill bill = homeActivity.getBillByTableStatus(false, position);
+
+        // Tạo date end
+        Calendar calendar = Calendar.getInstance();
+        Date date = new Date(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
+
+        bill.setTotalPrice(sum);
+        bill.setDateCheckOut(date);
+        bill.setStatus(true);
+
+        homeActivity.UpdateBill(bill);
+
+        TableFood tableFood = homeActivity.getTableFoodById(position);
+        tableFood.setStatus(false);
+        homeActivity.UpdateTableFood(tableFood);
+        Toast.makeText(homeActivity, "Tổng tiền là: " + sum + "   VND", Toast.LENGTH_SHORT).show();
+        ShowTable();
     }
 
     private void CancelPayTheBill(Dialog dialog) {

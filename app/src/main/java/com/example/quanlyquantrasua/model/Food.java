@@ -6,7 +6,6 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "Food")
 public class Food {
-
     @PrimaryKey(autoGenerate = true)
     private int foodID;
     private int categoryID;

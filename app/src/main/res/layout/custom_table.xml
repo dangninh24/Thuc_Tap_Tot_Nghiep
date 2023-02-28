@@ -66,7 +66,7 @@
             android:id="@+id/btn_order"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Đặt bàn"
+            android:text="Đặt đồ"
             android:textColor="@color/black"
             android:textSize="12sp"
             android:textStyle="bold" />

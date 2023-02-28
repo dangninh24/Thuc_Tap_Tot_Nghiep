@@ -33,6 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
+            android:id="@+id/txt_table_name_bottomsheet"
             android:textStyle="italic"
             android:textColor="@color/black"
             android:textSize="15sp"
@@ -52,13 +53,6 @@
             android:text="Thoát"
             android:layout_width="150dp"
             android:layout_height="wrap_content"/>
-        <Button
 
-            android:textColor="@color/black"
-            android:id="@+id/btn_order"
-            android:layout_marginLeft="50dp"
-            android:text="Đặt món"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"/>
     </LinearLayout>
 </LinearLayout>

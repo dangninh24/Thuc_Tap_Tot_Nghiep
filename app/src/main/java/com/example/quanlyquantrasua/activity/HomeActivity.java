@@ -9,11 +9,14 @@ import androidx.room.Room;
 import android.os.Bundle;
 
 import com.example.quanlyquantrasua.R;
+import com.example.quanlyquantrasua.data.dao.FoodDAO;
 import com.example.quanlyquantrasua.data.dbconnect.DBConnect;
+import com.example.quanlyquantrasua.data.relationship.FoodAndBillInfo;
 import com.example.quanlyquantrasua.databinding.ActivityHomeBinding;
 import com.example.quanlyquantrasua.fragment.HistoryFragment;
 import com.example.quanlyquantrasua.model.Account;
 import com.example.quanlyquantrasua.model.Bill;
+import com.example.quanlyquantrasua.model.BillInfo;
 import com.example.quanlyquantrasua.model.Category;
 import com.example.quanlyquantrasua.model.Food;
 import com.example.quanlyquantrasua.model.TableFood;
@@ -90,5 +93,40 @@ public class HomeActivity extends AppCompatActivity {
 
     public void UpdateFood(Food food) {
         dbConnect.getFoodDAO().UpdateFood(food);
+    }
+    public Bill getBillByTableStatus(boolean status, int tableID){
+        return dbConnect.getBillDAO().getBillByTableStatus(status, tableID);
+    }
+    public void AddBill(Bill bill) {
+        dbConnect.getBillDAO().AddBill(bill);
+    }
+    public void AddBillInfo(BillInfo billInfo){
+        dbConnect.getBillInfoDAO().AddBillInfo(billInfo);
+    }
+    public TableFood getTableFoodById(int id){
+        return dbConnect.getTableDAO().getTableByID(id);
+    }
+
+    public void UpdateTableFood(TableFood tableFood) {
+        dbConnect.getTableDAO().UpdateTable(tableFood);
+    }
+
+    public List<Food> getListFoodByStatus (boolean status) {
+        return dbConnect.getFoodDAO().getListFoodByStatus(status);
+    }
+    public List<FoodAndBillInfo> getListFoodAndBillInfoByBillID(int billID) {
+        return dbConnect.getBillInfoDAO().getListFoodAndBillInfoByBillID(billID);
+    }
+
+    public BillInfo getListBillInfoByFoodID(int billID, int foodID) {
+        return dbConnect.getBillInfoDAO().getListBillInfoByFoodID(billID, foodID);
+    }
+
+    public void UpdateBillInfo(BillInfo billInfo) {
+        dbConnect.getBillInfoDAO().UpdateBillInfo(billInfo);
+    }
+
+    public void UpdateBill(Bill bill) {
+        dbConnect.getBillDAO().UpdateBill(bill);
     }
 }

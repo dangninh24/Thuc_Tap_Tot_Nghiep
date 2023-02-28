@@ -101,7 +101,6 @@ public class MenuFragment extends Fragment {
         binding = FragmentMenuBinding.bind(view);
 
         LoadDataFood();
-        Event();
         return binding.getRoot();
     }
 
@@ -254,6 +253,7 @@ public class MenuFragment extends Fragment {
             homeActivity.DeleteFoodByID(food.getFoodID());
             LoadDataSpinnerDeleteFood(dialog);
             foodViewModel.LoadData(homeActivity.getListFood());
+            LoadDataFood();
             Toast.makeText(homeActivity, "Xóa đồ uống thành công", Toast.LENGTH_SHORT).show();
         }catch (Exception err) {
             Toast.makeText(homeActivity, "Lỗi xóa đồ uống", Toast.LENGTH_SHORT).show();
@@ -321,6 +321,7 @@ public class MenuFragment extends Fragment {
             homeActivity.AddFood(food);
             etxtFoodName.setText("");
             etxtFoodPrice.setText("");
+            LoadDataFood();
             Toast.makeText(homeActivity, "Thêm đồ uống thành công", Toast.LENGTH_SHORT).show();
         } catch (Exception err) {
             Toast.makeText(getContext(), "Lỗi thêm đồ uống" + err.getMessage(), Toast.LENGTH_SHORT).show();

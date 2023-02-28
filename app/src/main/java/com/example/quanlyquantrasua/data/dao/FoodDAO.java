@@ -27,4 +27,7 @@ public interface FoodDAO {
 
     @Query("UPDATE Food SET status = :status WHERE foodID = :foodId")
     public void updateFoodByStatus(boolean status, int foodId);
+
+    @Query("SELECT * FROM Food WHERE status = :status")
+    public List<Food> getListFoodByStatus(boolean status);
 }

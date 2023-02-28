@@ -13,4 +13,5 @@ public interface AccountDAO {
 
     @Query("SELECT * FROM Account WHERE usedName = :username AND password = :pass")
     public Account getAccountByUserNameAndPass(String username, String pass);
+
 }
